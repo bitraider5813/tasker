@@ -9,17 +9,17 @@ import (
 
 
 type model struct {
-	choices []string
+	tasks []string
 	cursor  int
-	selected map[int]struct{} 
+	completed map[int]struct{} 
 }
 
 
 // This is a private function that will return a model
 func initialModel() model {
 	return model{
-		choices: []string{"Buy carrots", "Buy celery", "Buy kohlrabi"},
-		selected: make(map[int]struct{}),
+		tasks: []string{"Buy carrots", "Buy celery", "Buy kohlrabi"},
+		completed: make(map[int]struct{}),
 	}
 }
 
@@ -42,15 +42,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.cursor--
 			}
 		case "down", "j":
-			if m.cursor < len(m.choices)-1 {
+			if m.cursor < len(m.tasks)-1 {
 				m.cursor++
 			}
 		case "enter", " ":
-			_, ok := m.selected[m.cursor]
+			_, ok := m.completed[m.cursor]
 			if ok {
-				delete(m.selected, m.cursor)
+				delete(m.completed, m.cursor)
 			} else {
-				m.selected[m.cursor] = struct{}{}
+				m.completed[m.cursor] = struct{}{}
 			}
 		}
 	}
@@ -64,7 +64,7 @@ func (m model) View() string {
 	// The header
 	s := "Tasker To-Do List: My First To-Do List\n\n"
 
-	for i, choice := range m.choices {
+	for i, task := range m.tasks {
 		// is the cursor pointing at this choice?
 		cursor := " "  // no cursor
 		if m.cursor == i {
@@ -73,12 +73,12 @@ func (m model) View() string {
 
 		// is this choice selcted?
 		checked := " " // not selected
-		if _, ok := m.selected[i]; ok {
+		if _, ok := m.completed[i]; ok {
 			checked = "x" //selected!
 		}
 
 		// Render the row
-		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
+		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, task)
 	}
 
 	// the footer
