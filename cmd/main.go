@@ -62,7 +62,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	// The header
-	s := "What should we buy at the market?\n\n"
+	s := "Tasker To-Do List: My First To-Do List\n\n"
 
 	for i, choice := range m.choices {
 		// is the cursor pointing at this choice?
@@ -89,7 +89,6 @@ func (m model) View() string {
 }
 
 func main() {
-	fmt.Println("This is the start of my todo app")
 	p := tea.NewProgram(initialModel())
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alias, there's been an error: %v", err)
