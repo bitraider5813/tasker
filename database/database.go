@@ -25,9 +25,17 @@ type CSVTaskRecord struct {
 }
 
 
-func getExistingDatabaseList(dbPath string, dbName string) ([]string) {
-	entries, err := os.ReadDir()
+func getExistingDatabaseList() ([]string) {
+	var dbList []string
+	entries, err := os.ReadDir(DB_PATH)
+	if err != nil {
+		log.Fatalf("Failed to Read Databases located at: %s", DB_PATH)
+	}
+	for _, e := range entries {
+		dbList = append(dbList, e.Name)
+	}
 
+	return dbList
 }
 
 
