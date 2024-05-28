@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"slices"
 )
 
 
@@ -40,10 +41,18 @@ func getExistingDatabaseList() ([]string) {
 
 
 func (db *CSVTaskDB) Exists bool {
-	dbExists := false
-
+	dbList := getExistingDatabaseList()
+	dbExists := slices.Contains(dbList, db.Name)
+	
+	return dbExists
 }
 
+
+// We should Initialize a Default Database if none already exist at DB_PATH
+func InitializeDefaultDatabase() error {
+	initError := nil
+	return initError
+}
 
 func (db *CSVTaskDB) CreateDatabase (error) {
 	error createDatabasesError := nil 
