@@ -43,7 +43,6 @@ func getExistingDatabaseList() ([]string) {
 func (db *CSVTaskDB) Exists bool {
 	dbList := getExistingDatabaseList()
 	dbExists := slices.Contains(dbList, db.Name)
-	
 	return dbExists
 }
 
@@ -55,6 +54,5 @@ func InitializeDefaultDatabase() error {
 }
 
 func (db *CSVTaskDB) CreateDatabase (error) {
-	error createDatabasesError := nil 
-        
+	error createDatabasesError := nil
 }
