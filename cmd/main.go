@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"github.com/charmbracelet/lipgloss"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -62,7 +63,17 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	// The header
-	s := "Tasker To-Do List: My First To-Do List\n\n"
+	var style = lipgloss.NewStyle().
+	  Bold(true).
+	  Foreground(lipgloss.Color("#3C3C3C")).
+	  Background(lipgloss.Color("86")).
+	  PaddingTop(0).
+	  PaddingBottom(0).
+	  PaddingLeft(4).
+	  Width(52)
+
+	s := fmt.Sprintf(style.Render("Tasker To-Do List: My First To-Do List"))
+	s += fmt.Sprintf("%s%s", "\n", "\n")
 
 	for i, task := range m.tasks {
 		// is the cursor pointing at this choice?
