@@ -71,6 +71,20 @@ func (m model) View() string {
 	  PaddingBottom(0).
 	  PaddingLeft(4).
 	  Width(52)
+	
+	
+	var selectedStyle = lipgloss.NewStyle().
+	  Foreground(lipgloss.Color("#3C3C3C")).
+	  PaddingTop(0).
+	  PaddingBottom(0).
+	  Margin(1)
+
+	var normalStyle = lipgloss.NewStyle().
+	  Foreground(lipgloss.Color("#04B575")).
+	  PaddingTop(0).
+	  PaddingBottom(0).
+	  Margin(1)
+
 
 	s := fmt.Sprintf(style.Render("Tasker To-Do List: My First To-Do List"))
 	s += fmt.Sprintf("%s%s", "\n", "\n")
@@ -85,11 +99,17 @@ func (m model) View() string {
 		// is this choice selcted?
 		checked := " " // not selected
 		if _, ok := m.completed[i]; ok {
-			checked = "x" //selected!
+			checked = "\u2713" //selected!
 		}
 
 		// Render the row
-		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, task)
+		if checked == "\u2713" {
+			checkedString := fmt.Sprintf("%s [%s] %s\n", cursor, checked, task)
+			s += fmt.Sprintf(selectedStyle.Render(checkedString))
+		} else {
+			normalString := fmt.Sprintf("%s [%s] %s\n", cursor, checked, task)
+			s += fmt.Sprintf(normalStyle.Render(normalString))
+		}
 	}
 
 	// the footer
